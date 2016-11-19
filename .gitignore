@@ -1,0 +1,45 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd (12, 11, 5, 4, 3, 2); 
+int cont = 0;
+String leer;
+int longitud = 0;
+
+
+void setup() {
+ 
+lcd.begin(16, 2);
+  Serial.begin(9600);
+  Serial.println("Ingrese Datos");
+  lcd.clear();
+}
+
+void loop() {
+
+  if (Serial.available() > 0) 
+  
+  {
+    leer = Serial.readString();
+    longitud = leer.length();
+    Serial.print("Dato recibido: "); 
+    Serial.println(leer);
+  }
+  for (; cont <= longitud; cont++) 
+  
+  {
+    lcd.clear();
+    lcd.setCursor(cont, 0);
+    lcd.print(leer);
+    delay(400);
+  }
+  for (; cont <= longitud; cont++) 
+  
+  {
+    lcd.setCursor(cont, 0);
+    lcd.print(leer.substring(cont - 1));
+    delay(400);
+    lcd.clear();
+  }
+  cont = 0;
+  delay(400);
+
+}
